@@ -10,6 +10,8 @@ var jwt = require('jsonwebtoken');
 const http = require('http');
 const ejs = require('ejs')
 const app = express()
+const {TextDecoder, TextEncoder} = require("util");
+
 const multer  = require('multer')
 const { config } = require('dotenv')
 app.set('view engine' , 'ejs')
