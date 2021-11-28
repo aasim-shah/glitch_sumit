@@ -10,7 +10,6 @@ const multer  = require('multer')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 var jwt = require('jsonwebtoken');
-const UserController = require('../controllers/userController')
 const Usermodel = require('../models/userModel')
 const ApplicationModel = require('../models/applicationModel')
 const { findByIdAndUpdate } = require('../models/userModel')

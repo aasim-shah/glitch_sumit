@@ -13,7 +13,6 @@ const app = express()
 const {TextDecoder, TextEncoder} = require("util");
 
 const multer  = require('multer')
-const { config } = require('dotenv')
 app.set('view engine' , 'ejs')
 app.use(session({ secret: "cats" }));
 app.use('/user' , userRouter)
