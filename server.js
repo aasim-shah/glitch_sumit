@@ -1,123 +1,61 @@
-/**
-* This is the main Node.js server script for your project
-* Check out the two endpoints this back-end API provides in fastify.get and fastify.post below
-*/
-
+const express = require("express");
 const path = require("path");
+const bodyParser = require("body-parser");
+var jwt = require("jsonwebtoken");
+const ejs = require("ejs");
+const app = express();
+const multer = require("multer");
+app.set("view engine", "ejs");
 
-// Require the fastify framework and instantiate it
-const fastify = require("fastify")({
-  // Set this to true for detailed logging:
-  logger: false
-});
+// let static_path = path.join(__dirname +'/uploads')
+let static_path = path.join(__dirname + "/uploads");
+console.log(static_path);
+app.use(express.static(static_path));
+// app.use('/user/view',express.static(static_path))
+console.log(static_path);
 
-// ADD FAVORITES ARRAY VARIABLE FROM TODO HERE
-
-
-// Setup our static files
-fastify.register(require("fastify-static"), {
-  root: path.join(__dirname, "public"),
-  prefix: "/" // optional: default '/'
-});
-
-// fastify-formbody lets us parse incoming forms
-fastify.register(require("fastify-formbody"));
-
-// point-of-view is a templating manager for fastify
-fastify.register(require("point-of-view"), {
-  engine: {
-    handlebars: require("handlebars")
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
   }
 });
+const port = process.env.PORT || 8080;
 
-// Load and parse SEO data
-const seo = require("./src/seo.json");
-if (seo.url === "glitch-default") {
-  seo.url = `https://${process.env.PROJECT_DOMAIN}.glitch.me`;
-}
+app.get("/", (req, res) => {
+  res.send("<h2>  HOme page <h2>");
+});
+var upload = multer({ storage: storage });
 
-/**
-* Our home page route
-*
-* Returns src/pages/index.hbs with data built into it
-*/
-fastify.get("/", function(request, reply) {
-  
-  // params is an object we'll pass to our handlebars template
-  let params = { seo: seo };
-  
-  // If someone clicked the option for a random color it'll be passed in the querystring
-  if (request.query.randomize) {
-    
-    // We need to load our color data file, pick one at random, and add it to the params
-    const colors = require("./src/colors.json");
-    const allColors = Object.keys(colors);
-    let currentColor = allColors[(allColors.length * Math.random()) << 0];
-    
-    // Add the color properties to the params object
-    params = {
-      color: colors[currentColor],
-      colorError: null,
-      seo: seo
-    };
-  }
-  
-  // The Handlebars code will be able to access the parameter values and build them into the page
-  reply.view("/src/pages/index.hbs", params);
+// app.post('/profile', upload.array('image', 3), function (req, res, next) {
+//     // req.files is array of `photos` files
+//     console.log(req.files);
+//     // req.body will contain the text fields, if there were any
+//   })
+
+const cpUpload = upload.fields([
+  { name: "image", maxCount: 1 },
+  { name: "image1", maxCount: 1 },
+  { name: "image2", maxCount: 1 }
+]);
+app.post("/profile", cpUpload, function(req, res, next) {
+  // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
+  //
+  // e.g.
+  //  req.files['avatar'][0] -> File
+  //  req.files['gallery'] -> Array
+  //
+  // req.body will contain the text fields, if there were any
 });
 
-/**
-* Our POST route to handle and react to form submissions 
-*
-* Accepts body data indicating the user choice
-*/
-fastify.post("/", function(request, reply) {
-  
-  // Build the params object to pass to the template
-  let params = { seo: seo };
-  
-  // If the user submitted a color through the form it'll be passed here in the request body
-  let color = request.body.color;
-  
-  // If it's not empty, let's try to find the color
-  if (color) {
-    // ADD CODE FROM TODO HERE TO SAVE SUBMITTED FAVORITES
-    
-    // Load our color data file
-    const colors = require("./src/colors.json");
-    
-    // Take our form submission, remove whitespace, and convert to lowercase
-    color = color.toLowerCase().replace(/\s/g, "");
-    
-    // Now we see if that color is a key in our colors object
-    if (colors[color]) {
-      
-      // Found one!
-      params = {
-        color: colors[color],
-        colorError: null,
-        seo: seo
-      };
-    } else {
-      
-      // No luck! Return the user value as the error property
-      params = {
-        colorError: request.body.color,
-        seo: seo
-      };
-    }
-  }
-  
-  // The Handlebars template will use the parameter values to update the page with the chosen color
-  reply.view("/src/pages/index.hbs", params);
+app.get("/profile", (req, res) => {
+  res.render("userdata2");
 });
 
-// Run the server and report out to the logs
-fastify.listen(process.env.PORT, function(err, address) {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-  console.log(`Your app is listening on ${address}`);
-  fastify.log.info(`server listening on ${address}`);
+let idAdmin = () => {};
+
+app.listen(port, () => {
+  console.log(`server is running on ${port} at http://localhost:3000`);
 });
