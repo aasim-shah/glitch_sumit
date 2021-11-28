@@ -32,7 +32,7 @@ var storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname)      
     }
 })
-const port = process.env.PORT || config.httpPort;
+const port = process.env.PORT || 5000;
 
 app.get('/' , (req , res) => {
     
