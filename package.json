@@ -1,33 +1,29 @@
 {
-  "name": "hello-node",
-  "version": "0.0.1",
-  "description": "A simple Node app built on fastify, instantly up and running.",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "fastify": "^3.24.0",
-    "fastify-formbody": "^5.2.0",
-    "fastify-static": "^4.5.0",
-    "handlebars": "^4.7.7",
-    "point-of-view": "^4.15.2",
-    "multer": "^1.4.3",
-    "ejs": "^3.1.6",
-    "body-parser": "^1.19.0",
-    "jsonwebtoken": "^8.5.1",
-    "express": "^4.17.1"
-  },
+  "name": "socialapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "engines": {
-    "node": "12.x"
+    "node" : "14.17.5",
+    "npm" : "6.14.14"
   },
-  "repository": {
-    "url": "https://glitch.com/edit/#!/glitch-hello-node"
+  "scripts": {
+    "start" : "node ./app.js"
   },
-  "license": "MIT",
-  "keywords": [
-    "node",
-    "glitch",
-    "express"
-  ]
+  "author": "Aasim",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "hbs": "^4.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.12",
+    "multer": "^1.4.3",
+    "passport": "^0.5.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  }
 }
