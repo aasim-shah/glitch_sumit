@@ -23,6 +23,8 @@ console.log(static_path);
 app.use(express.static(static_path))
 // app.use('/user/view',express.static(static_path))
 console.log(static_path);
+global.TextEncoder = require("util").TextEncoder;
+global.TextDecoder = require("util").TextDecoder;
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
