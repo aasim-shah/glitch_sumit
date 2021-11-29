@@ -4,11 +4,11 @@
   "description": "",
   "main": "app.js",
   "engines": {
-    "node" : "14.17.5",
-    "npm" : "6.14.14"
+    "node": "14.17.5",
+    "npm": "6.14.14"
   },
   "scripts": {
-    "start" : "node app.js"
+    "start": "node app.js"
   },
   "author": "Aasim",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "passport": "^0.5.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "mongoose": "^6.0.12"
+    "mongoose": "^6.0.12",
+    "ejs": "^3.1.6"
   }
 }

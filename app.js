@@ -11,7 +11,6 @@ const http = require('http');
 const ejs = require('ejs')
 const app = express()
 const multer  = require('multer')
-const { config } = require('dotenv')
 app.set('view engine' , 'ejs')
 app.use(session({ secret: "cats" }));
 app.use('/user' , userRouter)
