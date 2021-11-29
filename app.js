@@ -10,9 +10,8 @@ var jwt = require('jsonwebtoken');
 const http = require('http');
 const ejs = require('ejs')
 const app = express()
-const {TextDecoder, TextEncoder} = require("util");
-
 const multer  = require('multer')
+const { config } = require('dotenv')
 app.set('view engine' , 'ejs')
 app.use(session({ secret: "cats" }));
 app.use('/user' , userRouter)
@@ -22,8 +21,6 @@ console.log(static_path);
 app.use(express.static(static_path))
 // app.use('/user/view',express.static(static_path))
 console.log(static_path);
-global.TextEncoder = require("util").TextEncoder;
-global.TextDecoder = require("util").TextDecoder;
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -33,7 +30,7 @@ var storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname)      
     }
 })
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 app.get('/' , (req , res) => {
     
@@ -63,12 +60,6 @@ app.get('/profile', (req , res)=> {
     res.render('userdata2')
 })
   
-
-let idAdmin = ()=>{
-
-}
-
-
 app.listen(port , () => {
-    console.log(`server is running on ${port} at http://localhost:3000`);
+    console.log(`server is running on ${port} at http://localhost:${port}`);
 })
