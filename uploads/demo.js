@@ -61,8 +61,8 @@ function enableProp(cbox) {
 
 function renderResults(contacts) {
   contacts.forEach((contact) => {
-    if (contact.name) {document.getElementById('ref').setAttribute('value', contact.name)};
-    if (contact.tel){document.getElementById('te2').setAttribute('value', contact.tel)};
+    if (contact.name) {document.getElementById('referrence1_name').setAttribute('value', contact.name)};
+    if (contact.tel){document.getElementById('referrence1_contact').setAttribute('value',contact.tel)};
   });
   const strContacts = JSON.stringify(contacts, null, 2);
   console.log(strContacts);
