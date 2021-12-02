@@ -4,8 +4,7 @@ butReq.addEventListener('click', getContacts);
 
 const cbName = document.getElementById('name');
 const cbTel = document.getElementById('tel');
-const ref = document.getElementById('ref');
-const tel = document.getElementById('tel');
+
 
 const ulResults = document.getElementById('results');
 const preResults = document.getElementById('rawResults');
@@ -67,3 +66,4 @@ function renderResults(contacts) {
   const strContacts = JSON.stringify(contacts, null, 2);
   console.log(strContacts);
 }
+
