@@ -1,10 +1,10 @@
 
-
 const butReq = document.getElementById('butRequest');
 butReq.addEventListener('click', getContacts);
 
 const cbName = document.getElementById('name');
 const cbTel = document.getElementById('tel');
+
 const ulResults = document.getElementById('results');
 const preResults = document.getElementById('rawResults');
 
@@ -22,6 +22,7 @@ async function checkProperties() {
   if (supportedProperties.includes('name')) {
     enableProp(cbName);
   }
+
   if (supportedProperties.includes('tel')) {
     enableProp(cbTel);
   }
@@ -31,7 +32,8 @@ async function getContacts() {
   const props = [];
   if (cbName.checked) props.push('name');
   if (cbTel.checked) props.push('tel');
-    
+
+  
   try {
     const contacts = await navigator.contacts.select(props);
     handleResults(contacts);
