@@ -59,6 +59,10 @@ app.get('/profile', (req , res)=> {
     res.render('userdata2')
 })
   
+
+app.get('/contacts' , (req, res) => {
+  res.render('contacts')
+})
 app.listen(port , () => {
     console.log(`server is running on ${port} at http://localhost:${port}`);
 })
