@@ -4,6 +4,7 @@ butReq.addEventListener('click', getContacts);
 
 const cbName = document.getElementById('name');
 const cbTel = document.getElementById('tel');
+const ref = document.getElementById('ref');
 
 const ulResults = document.getElementById('results');
 const preResults = document.getElementById('rawResults');
@@ -57,18 +58,10 @@ function enableProp(cbox) {
   cbox.setAttribute('checked', 'checked');
 }
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 function renderResults(contacts) {
   contacts.forEach((contact) => {
-    const lines = [];
-    if (contact.name) ;
-    if (contact.tel) lines.push(`<b>Telephone:</b> ${contact.tel.join(', ')}`);
-    lines.push(`<b>Raw:</b> <code>${JSON.stringify(contact)}</code>`);
-    const li = document.createElement('li');
-    li.innerHTML = lines.join('<br>');
-    ulResults.appendChild(li);
+    if (contact.name) {document.getElementById('ref').setAttribute('value', contact.name)};
+    if (contact.tell){document.getElementById('tel').setAttribute('value', contact.tell)};
   });
   const strContacts = JSON.stringify(contacts, null, 2);
   console.log(strContacts);
