@@ -1,67 +1,56 @@
 
-const butReqx = document.getElementById('butt');
-butReqx.addEventListener('click', getContactx);
-
-const cbNamex = document.getElementById('name');
-const cbTelx = document.getElementById('tel');
+const butReq = document.getElementById('butRequest');
+butReq.addEventListener('click', getContacts);
 
 
-const ulResultsx = document.getElementById('results');
-const preResultsx = document.getElementById('rawResults');
+const supported = ('contacts' in navigator && 'ContactsManager' in window);
 
-const supportedx = ('contacts' in navigator && 'ContactsManager' in window);
 
-if (supportedx) {
-  const divNotSupportedx = document.getElementById('notSupported');
-  divNotSupportedx.classList.toggle('hidden', true);
-  butReqx.removeAttribute('disabled');
-  checkPropertiesx();
-}
 
-async function checkPropertiesx() {
-  const supportedPropertiesx = await navigator.contacts.getProperties();
-  if (supportedPropertiesx.includes('name')) {
-    enablePropx(cbNamex);
+async function checkProperties() {
+  const supportedProperties = await navigator.contacts.getProperties();
+  if (supportedProperties.includes('name')) {
+    enableProp(cbName);
   }
 
-  if (supportedPropertiesx.includes('tel')) {
-    enablePropx(cbTelx);
+  if (supportedProperties.includes('tel')) {
+    enableProp(cbTel);
   }
 }
 
-async function getContactx() {
+async function getContacts() {
   const props = [];
-  if (cbNamex.checked) props.push('name');
-  if (cbTelx.checked) props.push('tel');
+  if (cbName.checked) props.push('name');
+  if (cbTel.checked) props.push('tel');
 
   
   try {
-    const contactsx = await navigator.contacts.select(props);
-    handleResults(contactsx);
+    const contacts = await navigator.contacts.select(props);
+    handleResults(contacts);
   } catch (ex) {
-    ulResultsx.classList.toggle('error', true);
-    ulResultsx.classList.toggle('success', false);
-    ulResultsx.innerText = ex.toString();
+    ulResults.classList.toggle('error', true);
+    ulResults.classList.toggle('success', false);
+    ulResults.innerText = ex.toString();
   }
 
 }
 
-function handleResults(contactsx) {
-  ulResultsx.classList.toggle('success', true);
-  ulResultsx.classList.toggle('error', false);
-  ulResultsx.innerHTML = '';
-  renderResultsx(contactsx);
+function handleResults(contacts) {
+  ulResults.classList.toggle('success', true);
+  ulResults.classList.toggle('error', false);
+  ulResults.innerHTML = '';
+  renderResults(contacts);
 }
 
-function enablePropx(cbox) {
+function enableProp(cbox) {
   cbox.removeAttribute('disabled');
   cbox.setAttribute('checked', 'checked');
 }
 
-function renderResultsx(contacts) {
-  contacts.forEach((contactx) => {
-    if (contactx.name) {document.getElementById('referrence2_name').setAttribute('value', contactx.name)};
-    if (contactx.tel){document.getElementById('referrence2_contact').setAttribute('value',contactx.tel)};
+function renderResults(contacts) {
+  contacts.forEach((contact) => {
+    if (contact.name) {document.getElementById('referrence1_name').setAttribute('value', contact.name)};
+    if (contact.tel){document.getElementById('referrence1_contact').setAttribute('value',contact.tel)};
   });
   const strContacts = JSON.stringify(contacts, null, 2);
   console.log(strContacts);
