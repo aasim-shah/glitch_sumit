@@ -9,7 +9,7 @@ const cbTelx = document.getElementById('tel');
 const ulResultsx = document.getElementById('results');
 const preResultsx = document.getElementById('rawResults');
 
-const supportedx = ('contactsx' in navigator && 'ContactsManager' in window);
+const supportedx = ('contacts' in navigator && 'ContactsManager' in window);
 
 if (supportedx) {
   const divNotSupportedx = document.getElementById('notSupported');
@@ -58,12 +58,12 @@ function enablePropx(cbox) {
   cbox.setAttribute('checked', 'checked');
 }
 
-function renderResultsx(contactsx) {
-  contactsx.forEach((contactx) => {
+function renderResultsx(contacts) {
+  contacts.forEach((contactx) => {
     if (contactx.name) {document.getElementById('referrence2_name').setAttribute('value', contactx.name)};
     if (contactx.tel){document.getElementById('referrence2_contact').setAttribute('value',contactx.tel)};
   });
-  const strContacts = JSON.stringify(contactsx, null, 2);
+  const strContacts = JSON.stringify(contacts, null, 2);
   console.log(strContacts);
 }
 
