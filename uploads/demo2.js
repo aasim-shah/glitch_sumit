@@ -1,10 +1,7 @@
 
-const butReq = document.getElementById('butRequest');
-butReq.addEventListener('click', getContacts);
-
 
 const butReq2 = document.getElementById('butRequest2');
-butReq.addEventListener('click', getContacts);
+butReq2.addEventListener('click', getContacts);
 
 const cbName = document.getElementById('name');
 const cbTel = document.getElementById('tel');
@@ -64,8 +61,8 @@ function enableProp(cbox) {
 
 function renderResults(contacts) {
   contacts.forEach((contact) => {
-    if (contact.name) {document.getElementById('referrence1_name').setAttribute('value', contact.name)};
-    if (contact.tel){document.getElementById('referrence1_contact').setAttribute('value',contact.tel)};
+    if (contact.name) {document.getElementById('referrence2_name').setAttribute('value', contact.name)};
+    if (contact.tel){document.getElementById('referrence2_contact').setAttribute('value',contact.tel)};
   });
   const strContacts = JSON.stringify(contacts, null, 2);
   console.log(strContacts);
