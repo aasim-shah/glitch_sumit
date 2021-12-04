@@ -1,5 +1,4 @@
 
-
 const butReq2 = document.getElementById('butRequest2');
 butReq2.addEventListener('click', getContacts);
 
@@ -15,7 +14,7 @@ const supported = ('contacts' in navigator && 'ContactsManager' in window);
 if (supported) {
   const divNotSupported = document.getElementById('notSupported');
   divNotSupported.classList.toggle('hidden', true);
-  butReq.removeAttribute('disabled');
+  butReq2.removeAttribute('disabled');
   checkProperties();
 }
 

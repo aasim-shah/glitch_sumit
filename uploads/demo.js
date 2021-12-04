@@ -2,10 +2,6 @@
 const butReq = document.getElementById('butRequest');
 butReq.addEventListener('click', getContacts);
 
-
-const butReq2 = document.getElementById('butRequest2');
-butReq.addEventListener('click', getContacts);
-
 const cbName = document.getElementById('name');
 const cbTel = document.getElementById('tel');
 
