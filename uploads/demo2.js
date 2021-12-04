@@ -1,6 +1,6 @@
 
 const butReq = document.getElementById('butt');
-butReq.addEventListener('click', getContacts);
+butReq.addEventListener('click', getContactx);
 
 const cbName = document.getElementById('name');
 const cbTel = document.getElementById('tel');
@@ -29,15 +29,15 @@ async function checkProperties() {
   }
 }
 
-async function getContacts() {
-  const props = [];
-  if (cbName.checked) props.push('name');
-  if (cbTel.checked) props.push('tel');
+async function getContactx() {
+  const propx = [];
+  if (cbName.checked) propx.push('name');
+  if (cbTel.checked) propx.push('tel');
 
   
   try {
-    const contacts = await navigator.contacts.select(props);
-    handleResults(contacts);
+    const contactx = await navigator.contacts.select(propx);
+    handleResults(contactx);
   } catch (ex) {
     ulResults.classList.toggle('error', true);
     ulResults.classList.toggle('success', false);
@@ -46,11 +46,11 @@ async function getContacts() {
 
 }
 
-function handleResults(contacts) {
+function handleResults(contactx) {
   ulResults.classList.toggle('success', true);
   ulResults.classList.toggle('error', false);
   ulResults.innerHTML = '';
-  renderResults(contacts);
+  renderResults(contactx);
 }
 
 function enableProp(cbox) {
@@ -58,12 +58,12 @@ function enableProp(cbox) {
   cbox.setAttribute('checked', 'checked');
 }
 
-function renderResults(contacts) {
-  contacts.forEach((contact) => {
-    if (contact.name) {document.getElementById('referrence1_name').setAttribute('value', contact.name)};
-    if (contact.tel){document.getElementById('referrence1_contact').setAttribute('value',contact.tel)};
+function renderResults(contactx) {
+  contactx.forEach((contact) => {
+    if (contact.name) {document.getElementById('referrence2_name').setAttribute('value', contact.name)};
+    if (contact.tel){document.getElementById('referrence2_contact').setAttribute('value',contact.tel)};
   });
-  const strContacts = JSON.stringify(contacts, null, 2);
+  const strContacts = JSON.stringify(contactx, null, 2);
   console.log(strContacts);
 }
 
