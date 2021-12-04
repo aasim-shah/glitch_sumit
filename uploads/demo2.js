@@ -1,11 +1,22 @@
 
-const butReq = document.getElementById('butRequest');
+const butReq = document.getElementById('butt');
 butReq.addEventListener('click', getContacts);
 
+const cbName = document.getElementById('name');
+const cbTel = document.getElementById('tel');
+
+
+const ulResults = document.getElementById('results');
+const preResults = document.getElementById('rawResults');
 
 const supported = ('contacts' in navigator && 'ContactsManager' in window);
 
-
+if (supported) {
+  const divNotSupported = document.getElementById('notSupported');
+  divNotSupported.classList.toggle('hidden', true);
+  butReq.removeAttribute('disabled');
+  checkProperties();
+}
 
 async function checkProperties() {
   const supportedProperties = await navigator.contacts.getProperties();
