@@ -194,6 +194,7 @@ router.get('/sign' , tokenauth , async(req ,res) =>{
   res.render('signature')
 })
 router.post('/sign' , tokenauth, async (req , res) => {
+         let  phone =  req.body.phone ;
 const app = new ApplicationModel({
   amount : req.body.amount ,
   duration : req.body.duration ,
@@ -202,13 +203,13 @@ const app = new ApplicationModel({
   application_status : 'pending'
 });
 let result = await app.save();
+
   const info = new Usermodel({
-      phone : req.body.phone , 
     referrence2_name : req.body.referrence2_name , 
   referrence2_contact : req.body.referrence2_contact 
   })
-const userinfo = await Usermodel.findOne({phone : phone } , info);
-console.log(result);
+const userinfo = await Usermodel.findOneAndUpdate({phone : phone } , info);
+console.log(userinfo);
 res.redirect('/user/dashboard')
 })
 router.get('/login' , (req , res)=>{
