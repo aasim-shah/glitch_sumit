@@ -36,7 +36,7 @@
         <thead class="table-dark">
          <tr class="text-center">
            <td>Phone </td>
-             <td>Amount </td>
+             <td>Order Id </td>
              <td>Actions </td>
          </tr>
         </thead>
@@ -46,7 +46,9 @@
                   <td><%= repay[i].phone %></td>
                   <td><%= repay[i].order_id %></td>
 
-                  <td><a href="view/app/<%= repay[i].id %>" class="btn btn-sm btn-outline-dark px-2">View </a></td>
+                  <td><a href="view/repayment/<%= repay[i].id %>" class="btn btn-sm btn-outline-dark px-2">Approve </a>
+                  <a href="view/repayment/<%= repay[i].id %>" class="btn btn-sm btn-outline-dark px-2">Reject </a>
+                  </td>
                 </tr>
              <% } %>
         </tbody>
