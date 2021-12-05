@@ -289,6 +289,10 @@ router.get('/repayment' , tokenauth , async(req , res) =>{
 })
 
 
+router.post('/repayment' , tokenauth , async(req , res) =>{
+
+})
+
 
 
 router.get("/get/otp/:number",(req,res)=>{
