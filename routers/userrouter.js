@@ -10,16 +10,17 @@ const multer  = require('multer')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 var jwt = require('jsonwebtoken');
-const UserController = require('../controllers/userController')
 const Usermodel = require('../models/userModel')
+const AdmindataModel = require('../models/adminModel')
 const ApplicationModel = require('../models/applicationModel')
 const { findByIdAndUpdate } = require('../models/userModel')
 const { application } = require('express')
+const axios = require('axios')
 const router = express.Router()
 router.use(session({ secret: "cats" }));
 router.use(passport.initialize());
 router.use(passport.session());
-router.use(express.urlencoded({extended : false}))
+router.use(express.urlencoded({extended : false})) 
 router.use(express.json())
 router.use(session({ secret: "cats" }));
 router.use(cookieParser())
@@ -117,7 +118,7 @@ router.get('/info' , tokenauth, async(req ,res) => {
 const cpUpload = upload.fields([{ name: 'image_1', maxCount: 1 }, { name: 'image_2', maxCount: 1 }, {name : 'image_3', maxCount:1} , {name :'video' , maxCount: 1}])
 
 router.post('/info' ,tokenauth , cpUpload,  async (req , res) => {
-let {first_name , middle_name , last_name , email , password , phone , father_name , mother_name , dob, address, state , city , pin_code , referrence1_name , referrence1_contact , referrence2_name ,referrence2_contact , bank_name , account_holder_name , ifsc_code , account_number , documnet_id} = req.body;
+let {first_name , middle_name , last_name , email , password , phone , father_name , mother_name , dob, address, state , city , pin_code , referrence1_name , referrence1_contact , referrence2_name ,referrence2_contact , bank_name , account_holder_name , gender, ifsc_code , account_number , documnet_id} = req.body;
 
 const userInfo = {
   first_name : first_name ,
@@ -139,6 +140,7 @@ const userInfo = {
   bank_name : req.body.bank_name ,
   account_holder_name : account_holder_name ,
   ifscCode : ifsc_code,
+  gender : gender,
   account_number : account_number,
   document_id : documnet_id,
   image_1 :'/'+ req.files['image_1'][0].originalname,
@@ -149,8 +151,7 @@ const userInfo = {
 const userinfo = await Usermodel.findByIdAndUpdate(req.user.id , userInfo);
 console.log(req.user.id);
 console.log(userinfo);
-res.send('done')
-
+res.redirect('/user/package')
 })
 router.get('/package' , tokenauth , async(req ,res)=> {
   let phone = req.user.phone;
@@ -173,6 +174,7 @@ router.get('/package' , tokenauth , async(req ,res)=> {
 })
 router.post('/package' , tokenauth, async (req , res) => {
 let phone = req.user.phone;
+
 let checkapps = await ApplicationModel.findOne({phone : phone});
 console.log(phone);
 if(checkapps ){
@@ -188,11 +190,16 @@ if(checkapps ){
   }
 }
 })
+
+router.get('/sign' , tokenauth , async(req ,res) =>{
+  res.render('signature')
+})
 router.post('/sign' , tokenauth, async (req , res) => {
 const app = new ApplicationModel({
   amount : req.body.amount ,
   duration : req.body.duration ,
   phone : req.body.phone , 
+  repayment_date : '',
   application_status : 'pending'
 })
 let result = await app.save();
@@ -204,15 +211,36 @@ router.get('/login' , (req , res)=>{
 })
 router.get('/admin' ,tokenauth, ensureAdmin, async(req , res)=> {
   let allapp  =await ApplicationModel.find({application_status : 'pending'})
+  let approved  =await ApplicationModel.find({application_status : 'approved'})
+
 if(allapp){
-  res.render('adminhome' , {apps : allapp})
+  res.render('adminhome' , {apps : allapp , approved : approved})
 } else{res.render('adminhome')}
+
+
 })
-router.get('/approve/app/:id' , tokenauth , ensureAdmin , async(req , res) =>{
-  let id  = req.params.id;
+
+router.post('/admin/data' , tokenauth , ensureAdmin , async(req , res)=> {
+  let data = new AdmindataModel({
+    total_funds : req.body.total_funds
+  })
+  let dataSaved = await data.save();
+  console.log(dataSaved);
+})
+
+
+
+router.post('/approve' , tokenauth , ensureAdmin , async(req , res) =>{
+  let id  = req.body.app_id;
+  let repayment_date = req.body.repayment_date;
+  console.log(repayment_date);
   let dt = Date.now();
-  let approved = await ApplicationModel.findByIdAndUpdate(id , {application_status : 'approved' , approved_date : dt});
-  console.log(dt);
+  let loan = await ApplicationModel.findById(id);
+  let loan_amount = loan.amount;
+  console.log(loan_amount);
+  let funds = await AdmindataModel.find({total_funds : {$gt : loan_amount}})
+  console.log(funds);
+  let approved = await ApplicationModel.findByIdAndUpdate(id , {application_status : 'approved' , approved_date : dt , repayment_date : repayment_date});
   res.redirect('/user/admin')
 })
 router.get('/reject/app/:id' , tokenauth , ensureAdmin , async(req , res) =>{
@@ -224,9 +252,13 @@ router.get('/reject/app/:id' , tokenauth , ensureAdmin , async(req , res) =>{
 router.get('/view/app/:id' , tokenauth , ensureAdmin , async(req , res)=> {
   let id  = req.params.id;
   app = await ApplicationModel.findById(id);
+  applied_date = app.applied_on;
+  duration = app.duration;
+  let day = applied_date.getUTCDay() -1;
+  let month = applied_date.getUTCMonth() + 1;
+  console.log(Number(day)+Number(duration));
   phone = app.phone;
   user = await Usermodel.find({phone : phone})
-  console.log(user);
   let u = user[0];
 res.render('viewapp' , {app : app , user: u})
 })
@@ -245,5 +277,42 @@ router.get('/approvedapp' ,tokenauth , async(req , res)=> {
   data = app[0];
   console.log(app);
   res.render('approvedapp' , {app : data})
-} )
+})
+
+
+
+
+
+
+
+router.get("/get/otp/:number",(req,res)=>{
+  var otp = generateOTP();
+  axios({
+      url: "https://www.fast2sms.com/dev/bulkV2",
+      method: "post",
+      headers: {"authorization": "UwizLrB0fQhFpNVtYdy8xH4oMmlbGDv91qakTIg25ZSsPWKCu6NaFrqQZl0WGMLHzPIRnctfDxvs5uk6"},
+      data: {
+          "variables_values": otp,
+          "route": "otp",
+          "numbers": req.params.number,
+      }
+  }).then((ee)=>{
+      console.log(ee.data);
+  }).catch((err)=>{
+      console.log(err);
+  });
+  res.send(otp);
+});
+
+function generateOTP() {
+  var digits = '0123456789';
+  let OTP = '';
+  for (let i = 0; i < 6; i++ ) {
+      OTP += digits[Math.floor(Math.random() * 10)];
+  }
+  return OTP;
+}
+
+
+
   module.exports = router;
