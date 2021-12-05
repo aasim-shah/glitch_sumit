@@ -284,6 +284,15 @@ router.get('/approvedapp' ,tokenauth , async(req , res)=> {
   res.render('approvedapp' , {app : data})
 })
 
+router.get('/repayment/approved/:id' , tokenauth , ensureAdmin , async(req , res)=> {
+  let id  = req.params.id;
+ let  repay = await PaymentModel.findById(id);
+  let phone = repay.phone ;
+  let app = await ApplicationModel.findOneAndUpdate({phone : phone } , {
+    application_status : 'closed',
+  });
+  res.send(app);
+})
 
 router.get('/repayment' , tokenauth , async(req , res) =>{
   res.render('repayment');
