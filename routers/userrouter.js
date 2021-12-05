@@ -11,7 +11,6 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 var jwt = require('jsonwebtoken');
 const Usermodel = require('../models/userModel')
-const AdmindataModel = require('../models/adminModel')
 const ApplicationModel = require('../models/applicationModel')
 const { findByIdAndUpdate } = require('../models/userModel')
 const { application } = require('express')
