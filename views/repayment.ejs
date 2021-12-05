@@ -1,0 +1,21 @@
+<%- include('./partials/header.ejs') %>
+<%- include('./partials/navbar.ejs') %>
+
+<div class="container mt-4">
+  <div class="col-10 col-md-8 mx-auto ">
+    <h4>
+   Repayment Section    
+    </h4>
+      <img src="close.png" alt="" />
+      <form action="/user/repayment" method="post">
+          <label for="phone">Phone :</label>
+          <input type="text" name="phone" id="phone" class="form-control">
+          <label for="order_id">Order Id</label>
+          <input type="text" name="order_id" id="order_id" class="form-control">
+        <div class="text-center">
+          <button type="submit" class="btn btn-sm btn-warning px-3 mt-3">Order Now</button></div>
+      </form>
+  </div>
+</div>
+
+<%- include('./partials/footer.ejs') %>

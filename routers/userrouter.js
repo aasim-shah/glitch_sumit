@@ -284,7 +284,9 @@ router.get('/approvedapp' ,tokenauth , async(req , res)=> {
 })
 
 
-
+router.get('/repayment' , tokenauth , async(req , res) =>{
+  res.render('repayment');
+})
 
 
 
