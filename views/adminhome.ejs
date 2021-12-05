@@ -8,6 +8,8 @@
            <td>Phone </td>
              <td>Amount </td>
              <td>Duration </td>
+                        <td>Status</td>
+
              <td>Actions </td>
          </tr>
         </thead>
@@ -17,6 +19,8 @@
                   <td><%= apps[i].phone %></td>
                   <td><%= apps[i].amount %></td>
                   <td><%= apps[i].duration %></td>
+                                    <td><%= apps[i].application_status %></td>
+
                   <!-- <td><div class="d-flex"><a href="approve/app/<%= apps[i].id %>" class="btn btn-sm btn-success me-2">Approve</a><a href="reject/app/<%= apps[i].id %>" class="btn btn-sm btn-warning">Reject</a></div></td> -->
 
                   <td><a href="view/app/<%= apps[i].id %>" class="btn btn-sm btn-outline-dark px-2">View </a></td>

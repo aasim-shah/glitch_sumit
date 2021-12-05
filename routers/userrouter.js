@@ -289,9 +289,13 @@ router.get('/repayment/approved/:id' , tokenauth , ensureAdmin , async(req , res
  let  repay = await PaymentModel.findById(id);
   let phone = repay.phone ;
   let app = await ApplicationModel.findOneAndUpdate({phone : phone } , {
-    application_status : 'closed',
+    application_status : 'repaid',
   });
+    if(app){
   res.send(app);
+  }else{
+    res.send('no app related to this phone ');
+  }
 })
 
 router.get('/repayment' , tokenauth , async(req , res) =>{
