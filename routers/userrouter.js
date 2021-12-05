@@ -69,7 +69,7 @@ router.post('/register' , async(req ,res) => {
         const regtoken = await user.authuser()
         console.log(userregistered);
         console.log('hhaha');
-        res.redirect('/user/login')
+        res.redirect('/user/otp')
     }else{
         console.log('cpas doesnt matches');
     }
@@ -319,14 +319,14 @@ router.post('/repayment' , tokenauth , async(req , res) => {
     }
 })
 
-router.get('/otp' , tokenauth , (req , res)=> {
+router.get('/otp' ,  (req , res)=> {
   res.render('otp');
 })
-router.get('/verify/otp' , tokenauth , (req , res)=> {
-  res.render('verifyOtp');
+router.post('/verify/otp' , (req , res)=> {
+  res.send(req.body.verify_otp);
 })
 
-router.post("/get/otp",(req,res)=>{
+router.post("/get/otp", async (req,res)=>{
   let phone = req.body.phone;
   var otp = generateOTP();
   axios({
@@ -343,7 +343,14 @@ router.post("/get/otp",(req,res)=>{
   }).catch((err)=>{
       console.log(err);
   });
-  res.send(otp);
+  console.log(otp);
+  let save_otp = await Usermodel.findOneAndUpdate({phone : phone } , {
+    otp : otp
+  })
+  if(save_otp){ 
+  res.render('verifyOtp'); }else{
+    res.send('filed to save otp');
+  }
 });
 
 function generateOTP() {

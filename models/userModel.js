@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema({
     father_name :{type : String   },
     mother_name :{type : String   },
     dob : {type : String  },
+    otp : {type: String},
     address : {type : String},
     state : {type : String   },
     city : {type : String   },
