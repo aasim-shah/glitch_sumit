@@ -194,7 +194,6 @@ router.get('/sign' , tokenauth , async(req ,res) =>{
   res.render('signature')
 })
 router.post('/sign' , tokenauth, async (req , res) => {
-         let  id =  req.body.user_id ;
 const app = new ApplicationModel({
   amount : req.body.amount ,
   duration : req.body.duration ,
@@ -202,12 +201,12 @@ const app = new ApplicationModel({
   repayment_date : '',
   application_status : 'pending'
 });
+  let result = await app.save();
 
-  const info = new Usermodel({
-    referrence2_name : req.body.referrence2_name , 
+const userinfo = await Usermodel.findByIdAndUpdate(req.body.user_id , {
+  referrence2_name : req.body.referrence2_name , 
   referrence2_contact : req.body.referrence2_contact 
-  })
-const userinfo = await Usermodel.findByIdAndUpdate(id , info);
+});
 console.log(userinfo);
 res.redirect('/user/dashboard')
 })
