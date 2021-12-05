@@ -11,6 +11,8 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 var jwt = require('jsonwebtoken');
 const Usermodel = require('../models/userModel')
+const AdmindataModel = require('../models/adminModel')
+
 const ApplicationModel = require('../models/applicationModel')
 const { findByIdAndUpdate } = require('../models/userModel')
 const { application } = require('express')
@@ -134,8 +136,6 @@ const userInfo = {
   pin_code : pin_code ,
   referrence1_name : referrence1_name ,
   referrence1_contact : referrence1_contact ,
-  referrence2_name : referrence2_name , 
-  referrence2_contact : referrence2_contact ,
   bank_name : req.body.bank_name ,
   account_holder_name : account_holder_name ,
   ifscCode : ifsc_code,
@@ -200,8 +200,14 @@ const app = new ApplicationModel({
   phone : req.body.phone , 
   repayment_date : '',
   application_status : 'pending'
-})
+});
 let result = await app.save();
+  const info = new Usermodel({
+      phone : req.body.phone , 
+    referrence2_name : req.body.referrence2_name , 
+  referrence2_contact : req.body.referrence2_contact 
+  })
+const userinfo = await Usermodel.findOne({phone : phone } , info);
 console.log(result);
 res.redirect('/user/dashboard')
 })

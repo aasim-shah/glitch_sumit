@@ -32,6 +32,19 @@
 					<input type="text" name="phone" id="" class="form-control" value="<%= user.phone %>">
 				<input type="text" name="amount" id="" value="<%= amount %>" class="form-control">
 				<input type="text" name="duration" id="" value="<%= duration %>" class="form-control">
+              <div class="form-group butmian" id="butmian">
+               <p>
+      <button id="butt" type="button" disabled class="butrequest">
+        From Contacts
+      </button>
+    </p>
+              <label for="referrence2_name">referrence2_name * :</label>
+                <input type="text" name="referrence2_name" id="referrence2_name" required  class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="referrence2_contact">referrence2_contact * :</label>
+                <input type="text" name="referrence2_contact" id="referrence2_contact" required  class="form-control">
+            </div>
 			</div>
 		</div>
 		<div class="modal-footer">
@@ -312,3 +325,44 @@ $('#bcPaint').bcPaint();
 </script>
 </body>
 </html>
+
+  <body>
+ 
+    
+    <p id="requireHTTPS" class="hidden">
+     
+    </p>
+       
+    <p id="notSupported">
+    
+    </p>
+       
+
+    <ol>
+      
+      <li class="d-none">
+        <input type="checkbox" id="name" checked />
+        <label for="name">Include name?</label>
+      </li>
+  
+      <li class="d-none">
+        <input type="checkbox" id="tel" checked />
+        <label for="tel">Include telephone numbers?</label>
+      </li>
+    
+    </ol>
+  
+   
+ 
+    
+    <ul id="results">
+     
+    </ul>
+    <pre id="rawResults">
+    </pre>
+
+    
+    <script src="/common.js"></script>
+    <script src="/demo2.js"></script>
+
+ 
