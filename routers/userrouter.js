@@ -322,8 +322,15 @@ router.post('/repayment' , tokenauth , async(req , res) => {
 router.get('/otp' ,  (req , res)=> {
   res.render('otp');
 })
-router.post('/verify/otp' , (req , res)=> {
-  res.send(req.body.verify_otp);
+router.post('/verify/otp' , async(req , res)=> {
+  let otp = req.body.verify_otp;
+  console.log(otp)
+  let verified = await Usermodel.findOne({otp : otp});
+  if(verified){
+   res.redirect('/user/login')
+  }else{
+res.redirect('/user/verify/otp')  
+  }
 })
 
 router.post("/get/otp", async (req,res)=>{
