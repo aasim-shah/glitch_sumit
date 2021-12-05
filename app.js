@@ -32,8 +32,7 @@ var storage = multer.diskStorage({
 const port = process.env.PORT || 3000;
 
 app.get('/' , (req , res) => {
-    
-    res.send('<h2>  HOme page <h2>')
+  res.render('home');
 
 })
 var upload = multer({ storage: storage });
