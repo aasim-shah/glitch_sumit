@@ -69,7 +69,7 @@ router.post('/register' , async(req ,res) => {
         const regtoken = await user.authuser()
         console.log(userregistered);
         console.log('hhaha');
-        res.redirect('/user/otp')
+        res.render('otp' , {reg_user : userregistered})
     }else{
         console.log('cpas doesnt matches');
     }
@@ -328,6 +328,7 @@ router.post('/verify/otp' , (req , res)=> {
 
 router.post("/get/otp", async (req,res)=>{
   let phone = req.body.phone;
+  let reg_phone = req.body.reg_phone;
   var otp = generateOTP();
   axios({
       url: "https://www.fast2sms.com/dev/bulkV2",
@@ -344,7 +345,7 @@ router.post("/get/otp", async (req,res)=>{
       console.log(err);
   });
   console.log(otp);
-  let save_otp = await Usermodel.findOneAndUpdate({phone : phone } , {
+  let save_otp = await Usermodel.findOneAndUpdate({phone : reg_phone } , {
     otp : otp
   })
   if(save_otp){ 
