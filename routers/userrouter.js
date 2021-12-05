@@ -56,8 +56,8 @@ router.get('/register' , (req, res)=>{
   res.render('registeration')
 })
 router.post('/register' , async(req ,res) => {
-    password = req.body.password;
-    cpassword = req.body.cpassword;
+   let   password = req.body.password;
+   let  cpassword = req.body.cpassword;
     if(password === cpassword){
         let encpassword = await bcrpyt.hash(password , 10)
         const user = new Usermodel({
@@ -251,14 +251,14 @@ router.get('/reject/app/:id' , tokenauth , ensureAdmin , async(req , res) =>{
 })
 router.get('/view/app/:id' , tokenauth , ensureAdmin , async(req , res)=> {
   let id  = req.params.id;
-  app = await ApplicationModel.findById(id);
-  applied_date = app.applied_on;
-  duration = app.duration;
+ let  app = await ApplicationModel.findById(id);
+  let  applied_date = app.applied_on;
+let   duration = app.duration;
   let day = applied_date.getUTCDay() -1;
   let month = applied_date.getUTCMonth() + 1;
   console.log(Number(day)+Number(duration));
-  phone = app.phone;
-  user = await Usermodel.find({phone : phone})
+ let  phone = app.phone;
+ let  user = await Usermodel.find({phone : phone})
   let u = user[0];
 res.render('viewapp' , {app : app , user: u})
 })
@@ -274,7 +274,7 @@ router.get('/rejectedapp' ,tokenauth , async(req , res)=> {
 router.get('/approvedapp' ,tokenauth , async(req , res)=> {
   let phone = req.user.phone;
   let app = await ApplicationModel.find({phone : phone})
-  data = app[0];
+ let  data = app[0];
   console.log(app);
   res.render('approvedapp' , {app : data})
 })
