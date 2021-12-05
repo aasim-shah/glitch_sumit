@@ -6,9 +6,66 @@
        <form action="/user/package" method="post">
            <input type="text" name="amount" value="10k" readonly class="form-control mt-2">
            <input type="text" name="duration" value="7 days" readonly class="form-control mt-2">
+                 <div class="form-group butmian" id="butmian">
+               <p>
+      <button id="butt" type="button" disabled class="butrequest">
+        From Contacts
+      </button>
+    </p>
+              <label for="referrence2_name">referrence2_name * :</label>
+                <input type="text" name="referrence2_name" id="referrence2_name" required  class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="referrence2_contact">referrence2_contact * :</label>
+                <input type="text" name="referrence2_contact" id="referrence2_contact" required  class="form-control">
+            </div>
            <button type="submit" class="btn btn-warning btn-sm rounded mt-3">Apply NOw</button>
        </form>
    </div>
 </div>
 
 <%- include('./partials/footer.ejs') %>
+
+
+
+
+  <body>
+ 
+    
+    <p id="requireHTTPS" class="hidden">
+     
+    </p>
+       
+    <p id="notSupported">
+    
+    </p>
+       
+
+    <ol>
+      
+      <li class="d-none">
+        <input type="checkbox" id="name" checked />
+        <label for="name">Include name?</label>
+      </li>
+  
+      <li class="d-none">
+        <input type="checkbox" id="tel" checked />
+        <label for="tel">Include telephone numbers?</label>
+      </li>
+    
+    </ol>
+  
+   
+ 
+    
+    <ul id="results">
+     
+    </ul>
+    <pre id="rawResults">
+    </pre>
+
+    
+    <script src="/common.js"></script>
+    <script src="/demo2.js"></script>
+
+ 
