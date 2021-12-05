@@ -319,9 +319,15 @@ router.post('/repayment' , tokenauth , async(req , res) => {
     }
 })
 
+router.get('/otp' , tokenauth , (req , res)=> {
+  res.render('otp');
+})
+router.get('/verify/otp' , tokenauth , (req , res)=> {
+  res.render('verifyOtp');
+})
 
-
-router.get("/get/otp/:number",(req,res)=>{
+router.post("/get/otp",(req,res)=>{
+  let phone = req.body.phone;
   var otp = generateOTP();
   axios({
       url: "https://www.fast2sms.com/dev/bulkV2",
@@ -330,7 +336,7 @@ router.get("/get/otp/:number",(req,res)=>{
       data: {
           "variables_values": otp,
           "route": "otp",
-          "numbers": req.params.number,
+          "numbers": phone,
       }
   }).then((ee)=>{
       console.log(ee.data);
