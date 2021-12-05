@@ -12,7 +12,7 @@ const bodyParser = require('body-parser')
 var jwt = require('jsonwebtoken');
 const Usermodel = require('../models/userModel')
 const AdmindataModel = require('../models/adminModel')
-
+const PaymentModel = require('../models/paymentModel')
 const ApplicationModel = require('../models/applicationModel')
 const { findByIdAndUpdate } = require('../models/userModel')
 const { application } = require('express')
@@ -216,9 +216,10 @@ router.get('/login' , (req , res)=>{
 router.get('/admin' ,tokenauth, ensureAdmin, async(req , res)=> {
   let allapp  =await ApplicationModel.find({application_status : 'pending'})
   let approved  =await ApplicationModel.find({application_status : 'approved'})
+  let repay = await PaymentModel.find();
 
 if(allapp){
-  res.render('adminhome' , {apps : allapp , approved : approved})
+  res.render('adminhome' , {apps : allapp , approved : approved , repay : repay})
 } else{res.render('adminhome')}
 
 
@@ -289,8 +290,20 @@ router.get('/repayment' , tokenauth , async(req , res) =>{
 })
 
 
-router.post('/repayment' , tokenauth , async(req , res) =>{
 
+router.post('/repayment' , tokenauth , async(req , res) => {
+      let pay = new PaymentModel({
+        phone : req.body.phone ,
+        order_id : req.body.order_id
+      })
+      let saved_pay = await pay.save();
+      console.log(saved_pay);
+  
+    if(saved_pay){
+      res.send('hogya repayment ');
+    }else{
+      res.send('failed to repay ! better luck next time');
+    }
 })
 
 
