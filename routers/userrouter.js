@@ -239,12 +239,17 @@ router.get('/login' , (req , res)=>{
   res.render('login');
 })
 router.get('/admin' ,tokenauth, ensureAdmin, async(req , res)=> {
-  let allapp  =await ApplicationModel.find({application_status : 'pending'})
-  let approved  =await ApplicationModel.find({application_status : 'approved'})
-  let repay = await PaymentModel.find();
+    let total  =await ApplicationModel.count();
+  let pending  =await ApplicationModel.count({application_status : 'pending'})
+  let approved  =await ApplicationModel.count({application_status : 'approved'})
+let repaid  =await ApplicationModel.count({application_status : 'repaid'})
+let rejected  = await ApplicationModel.count({application_status : 'rejected'})
 
-if(allapp){
-  res.render('adminhome' , {apps : allapp , approved : approved , repay : repay})
+
+  let repay = await PaymentModel.count();
+
+if(total){
+  res.render('adminhome' , {apps : total ,pending : pending , approved : approved , repay : repay , repaid : repaid , rejected : rejected})
 } else{res.render('adminhome')}
 
 
