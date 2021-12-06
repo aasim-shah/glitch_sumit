@@ -287,8 +287,8 @@ res.render('viewapp' , {app : app , user: u})
 })
 router.get('/dashboard' , tokenauth , async (req , res)=> {
   let user = req.user.phone;
-  let app = await ApplicationModel.find({phone : user});
-  res.render('reviewapp' )
+  let app = await ApplicationModel.findOne({phone : user});
+  res.render('reviewapp' , {app : app})
 })
 
 router.get('/rejectedapp' ,tokenauth , async(req , res)=> {
