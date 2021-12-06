@@ -265,6 +265,7 @@ router.post('/approve' , tokenauth , ensureAdmin , async(req , res) =>{
   console.log(funds);
   let approved = await ApplicationModel.findByIdAndUpdate(id , {application_status : 'approved' , approved_date : dt , repayment_date : repayment_date});
   res.redirect('/user/admin')
+  console.log(re)
 })
 router.get('/reject/app/:id' , tokenauth , ensureAdmin , async(req , res) =>{
   let id  = req.params.id;
