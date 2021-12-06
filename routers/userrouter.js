@@ -117,7 +117,11 @@ router.post('/login', otpVerifeid,
         break;
         case 'rejected':
           res.redirect('/user/rejectedapp')
-          break;         
+          break;  
+       case 'repaid':
+          res.redirect('/user/repaid')
+          break;    
+          
       }
      }else{
       res.redirect('/user/package')
@@ -183,7 +187,10 @@ router.get('/package' , tokenauth , async(req ,res)=> {
       break;
       case 'rejected':
         res.redirect('/user/rejectedapp')
-        break;         
+        break;  
+      case 'repaid':
+        res.redirect('/user/repaid')
+        break;  
     }
   }else{
       res.render('package')
@@ -292,6 +299,11 @@ router.get('/dashboard' , tokenauth , async (req , res)=> {
   res.render('reviewapp' , {app : app})
 })
 
+router.get('/repaid' , tokenauth , async (req , res)=> {
+  let user = req.user.phone;
+  let app = await ApplicationModel.findOne({phone : user});
+  res.render('reviewapp' , {app : app})
+})
 router.get('/rejectedapp' ,tokenauth , async(req , res)=> {
   let user = req.user.phone;
   let app = await ApplicationModel.findOne({phone : user});
