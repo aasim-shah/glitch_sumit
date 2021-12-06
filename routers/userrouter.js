@@ -43,6 +43,8 @@ router.get('/' , tokenauth ,(req , res)=> {
 
 })
 
+const otpVerifeid = 
+
 const ensureAdmin = function(req, res, next) {
   if (req.isAuthenticated()) {
     if (req.user.isAdmin) {
@@ -332,6 +334,7 @@ router.post('/verify/otp' , async(req , res)=> {
   console.log(otp)
   let verified = await Usermodel.findOne({otp : otp});
   if(verified){
+    let verify = await Usermodel.findOneAndUpdate({otp : otp} , {verified : true})
    res.redirect('/user/login')
   }else{
 res.redirect('/user/verify/otp')  
@@ -358,7 +361,7 @@ router.post("/get/otp", async (req,res)=>{
   console.log(otp);
   let save_otp = await Usermodel.findOneAndUpdate({phone : reg_phone } , {
     otp : otp , 
-    verified : true,
+
   })
   if(save_otp){ 
   res.render('verifyOtp'); }else{
