@@ -342,6 +342,26 @@ router.get('/repayment' , tokenauth , async(req , res) =>{
 
 
 
+
+router.get('/adminApproved' , tokenauth , ensureAdmin , async(req ,res)=> {
+  let approved  =await ApplicationModel.find({application_status : 'approved'})
+  res.render('adminapprovedplans' , {apps : approved} )
+})
+
+
+
+
+router.get('/adminRepayments' , tokenauth , ensureAdmin , async(req ,res)=> {
+  let repay = await PaymentModel.find();
+  res.render('adminrepayments' , {repay : repay} )
+})
+
+
+
+
+
+
+
 router.post('/repayment' , tokenauth , async(req , res) => {
       let pay = new PaymentModel({
         phone : req.body.phone ,
