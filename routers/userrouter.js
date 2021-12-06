@@ -353,7 +353,7 @@ router.get('/adminApproved' , tokenauth , ensureAdmin , async(req ,res)=> {
 router.get('/adminTotal' , tokenauth , ensureAdmin , async(req ,res)=> {
   let total  =await ApplicationModel.find();
   res.render('admintotalplans' , {apps : total} )
-t
+})
 
 
 
