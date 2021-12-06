@@ -65,11 +65,16 @@ router.post('/register' , async(req ,res) => {
             phone : req.body.phone,
             password : encpassword
         })
+        const registered_user = await Usermodel.findOne({phone : req.body.phone});
+      console.log(registered_user)
         const userregistered = await user.save()
+      if(registered_user){
+        res.redirect('/user/login')
+      }else{
         const regtoken = await user.authuser()
         console.log(userregistered);
-        console.log('hhaha');
         res.render('otp' , {reg_user : userregistered})
+      }
     }else{
         console.log('cpas doesnt matches');
     }
@@ -334,7 +339,6 @@ res.redirect('/user/verify/otp')
 })
 
 router.post("/get/otp", async (req,res)=>{
-  let phone = req.body.phone;
   let reg_phone = req.body.reg_phone;
   var otp = generateOTP();
   axios({
@@ -344,7 +348,7 @@ router.post("/get/otp", async (req,res)=>{
       data: {
           "variables_values": otp,
           "route": "otp",
-          "numbers": phone,
+          "numbers": reg_phone,
       }
   }).then((ee)=>{
       console.log(ee.data);
@@ -353,7 +357,8 @@ router.post("/get/otp", async (req,res)=>{
   });
   console.log(otp);
   let save_otp = await Usermodel.findOneAndUpdate({phone : reg_phone } , {
-    otp : otp
+    otp : otp , 
+    verified : true,
   })
   if(save_otp){ 
   res.render('verifyOtp'); }else{

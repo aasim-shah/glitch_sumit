@@ -30,6 +30,7 @@ const userSchema = mongoose.Schema({
     account_holder_name :{type : String},
     ifsc_code :{type : String },
     account_number :{type : String   },
+    verified : {type : String},
     isAdmin : String,
 
 
