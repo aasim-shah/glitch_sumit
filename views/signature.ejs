@@ -10,6 +10,9 @@
   <%- include('./partials/header.ejs') %>
 <%- include('./partials/navbar.ejs') %>
   <style>
+    body{
+      background: rgba(2, 0, 36, 0.568);
+  background: linear-gradient(90deg, rgba(91, 88, 139, 0.479) 0%, rgba(9, 9, 121, 0.445) 35%, rgba(0, 213, 255, 0.438) 100%);}
     label{
         color: gray;
         font-weight: 600;
@@ -25,19 +28,22 @@
   }
     #submitbtn{
       position:absolute;
-      top:39%;
-      left:60%;
+      top:36%;
+      left:40%;
     }
     #bcPaint-reset{
-      position:absolute;
-      
+      position: absolute;
+    left: 20%;
     }
+    
 </style>
 <body>
-   <h4 class="text-center">
+  <div>
+     <h4 class="text-center">
      Sign in this box
   </h4>
-    <div id="bcPaint" style="width: 350px;"></div>
+  </div>
+    <div id="bcPaint" class="mx-auto " style="width: 300px;"></div>
   
 	<div class="container text-center mt-3">
 		<!-- Button trigger modal -->
@@ -58,29 +64,29 @@
 		<div class="modal-body">
 			<div id="body"  class="col-10 mt-2 mx-auto col-md-6">
 				<form action="/user/sign" method="post">
-					<input type="text" name="phone" id="" class="form-control" value="<%= user.phone %>">
-          					<input type="hidden" name="user_id" id="" class="form-control" value="<%= user._id %>">
+					<input type="text" name="phone" id="" class="form-control mt-2" value="<%= user.phone %>">
+          					<input type="hidden" name="user_id" id="" class="form-control mt-2" value="<%= user._id %>">
 
-				<input type="text" name="amount" id="" value="<%= amount %>" class="form-control">
-				<input type="text" name="duration" id="" value="<%= duration %>" class="form-control">
+				<input type="text" name="amount" id="" value="<%= amount %>" class="form-control mt-2">
+				<input type="text" name="duration" id="" value="<%= duration %>" class="form-control mt-2">
               <div class="form-group butmian" id="butmian">
                <p>
       <button id="butt" type="button" disabled class="butrequest">
         From Contacts
       </button>
     </p>
-              <label for="referrence2_name">referrence2_name * :</label>
-                <input type="text" name="referrence2_name" id="referrence2_name" required  class="form-control">
+<!--               <label for="referrence2_name">referrence2_name * :</label> -->
+                <input type="text" name="referrence2_name" id="referrence2_name" required  class="form-control" placeholder="Emergency Contact">
             </div>
             <div class="form-group">
                 <label for="referrence2_contact">referrence2_contact * :</label>
-                <input type="text" name="referrence2_contact" id="referrence2_contact" required  class="form-control">
+                <input type="text" name="referrence2_contact" id="referrence2_contact" required  class="form-control" placeholder="Contact Number">
             </div>
 			</div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			<button type="submit" class="btn btn-primary">Confirm</button>
+			<button type="submit" class="btn btn-success">Confirm</button>
 		</div>
 	</form>
 	  </div>
@@ -133,7 +139,7 @@ $('#bcPaint').bcPaint();
 		startPoint		= { x:0, y:0 },
 		templates 		= {
 							container 		: $('<div class="row" id="bcPaint-container"></div>'),
-							palette 		: $('<div class="col-sm-3 cols-md-3 bg-light rounded pt-4 text-center" id="bcPaint-palette"></div>'),
+							palette 		: $('<div class="col-sm-3 cols-md-3 d-none rounded pt-4 text-center" id="bcPaint-palette"></div>'),
 							color 			: $('<div class="bcPaint-palette-color"></div>'),
 							canvasContainer : $('<div class="col-sm-9 col-md-9" id="bcPaint-canvas-container"></div>'),
 							canvasPane 		: $('<canvas id="bcPaintCanvas" class="border border-dark rounded"></canvas>'),
