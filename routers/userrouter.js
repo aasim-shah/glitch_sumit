@@ -43,7 +43,18 @@ router.get('/' , tokenauth ,(req , res)=> {
 
 })
 
-const otpVerifeid = 
+const otpVerifeid = async function  (req , res , next ){
+  let userr = await Usermodel.findOne({phone : req.body.phone});
+  console.log('userrr')
+  let verified = userr.verified;
+  if(verified){
+   return next();
+  }else{
+  res.render('otp' , {reg_user : userr});
+  }
+  
+
+}
 
 const ensureAdmin = function(req, res, next) {
   if (req.isAuthenticated()) {
@@ -84,7 +95,7 @@ router.post('/register' , async(req ,res) => {
 } )
 
 
-router.post('/login', 
+router.post('/login', otpVerifeid, 
   passport.authenticate('local', { failureRedirect: '/user/login' }), async(req, res) => {
       const loginToken = await req.user.authuser_login()
       res.cookie('Token' , loginToken ,{
