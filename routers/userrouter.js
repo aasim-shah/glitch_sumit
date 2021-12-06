@@ -302,7 +302,7 @@ router.get('/dashboard' , tokenauth , async (req , res)=> {
 router.get('/repaid' , tokenauth , async (req , res)=> {
   let user = req.user.phone;
   let app = await ApplicationModel.findOne({phone : user});
-  res.render('reviewapp' , {app : app})
+  res.render('repaid' , {app : app})
 })
 router.get('/rejectedapp' ,tokenauth , async(req , res)=> {
   let user = req.user.phone;
