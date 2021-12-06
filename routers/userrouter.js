@@ -292,7 +292,9 @@ router.get('/dashboard' , tokenauth , async (req , res)=> {
 })
 
 router.get('/rejectedapp' ,tokenauth , async(req , res)=> {
-  res.render('rejectedapp')
+  let user = req.user.phone;
+  let app = await ApplicationModel.findOne({phone : user});
+  res.render('rejectedapp' , {app : app})
 })
 router.get('/approvedapp' ,tokenauth , async(req , res)=> {
   let phone = req.user.phone;
