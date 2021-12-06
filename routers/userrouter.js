@@ -350,6 +350,24 @@ router.get('/adminApproved' , tokenauth , ensureAdmin , async(req ,res)=> {
 
 
 
+router.get('/adminTotal' , tokenauth , ensureAdmin , async(req ,res)=> {
+  let total  =await ApplicationModel.find();
+  res.render('admintotalplans' , {apps : total} )
+t
+
+
+
+
+router.get('/adminPending' , tokenauth , ensureAdmin , async(req ,res)=> {
+  let pending  =await ApplicationModel.find({application_status : 'pending'})
+  res.render('adminpendingplans' , {apps : pending} )
+})
+
+
+
+
+
+
 
 router.get('/adminRepayments' , tokenauth , ensureAdmin , async(req ,res)=> {
   let repay = await PaymentModel.find();
