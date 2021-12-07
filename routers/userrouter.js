@@ -277,20 +277,16 @@ router.post('/approve' , tokenauth , ensureAdmin , async(req , res) =>{
   console.log(loan_amount);
   let funds = await AdmindataModel.find({total_funds : {$gt : loan_amount}})
   console.log(funds);
-  let approved = await ApplicationModel.findByIdAndUpdate(id , {application_status : 'approved' , approved_date : dt , repayment_date : repayment_date});
-  
-  
    let idd = '61a4f8dce645cdd8ef3fd141';
-  let raw_app = await ApplicationModel.findById({phone : phone});
-  let raw_amount = raw_app.amount;
   let admin_total_bal = await AdmindataModel.findById(idd);
   let admin_bal = admin_total_bal.total_funds;
-  let new_bal = admin_bal - raw_amount ;
-  console.log(new_bal)
-  console.log(admin_bal)
-  console.log(raw_amount)
+  if(admin_bal > loan_amount){
+  let approved = await ApplicationModel.findByIdAndUpdate(id , {application_status : 'approved' , approved_date : dt , repayment_date : repayment_date});
+  let new_bal = admin_bal - loan_amount ;
   let updated_admin_bal = await AdmindataModel.findByIdAndUpdate(idd , {total_funds : new_bal})
-  console.log(updated_admin_bal);
+  }else{
+    res.send('No Enough Funds ')
+  }
   
   
   
