@@ -110,16 +110,20 @@
              </tr>        
             <tr>
                 <td>Applied </td>
-                <td><%= app.applied_on %></td>
+                <td><%= app.applied_on.toString().split('T')[0] %></td>
             </tr>        
             <tr>
-                <td>Repayment </td>
-                <form action="/user/approve" method="post">
-                <td><input type="date" name="repayment_date" id="repayment_date" class="form-control"></td>
+                <td>Repayment date</td>
+                <td><%= app.repayment_date %></td>
             </tr>        
         </tbody>
       </table>
-    </div>
+      <div class="bg-success my-3 text-center py-2">
+        <h4 class="text-light">
+          Approved
+        </h4>
+  </div>
+</div>
 
 
 <%- include('./partials/footer.ejs') %>
