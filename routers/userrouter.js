@@ -167,6 +167,7 @@ const userInfo = {
   image_1 :'/'+ req.files['image_1'][0].originalname,
   image_2 :'/'+ req.files['image_2'][0].originalname,
   image_3 : '/'+ req.files['image_3'][0].originalname,
+  if(req.body.image_3)
   video : '/'+ req.files['video'][0].originalname,
 }
 const userinfo = await Usermodel.findByIdAndUpdate(req.user.id , userInfo);
