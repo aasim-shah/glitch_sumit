@@ -299,6 +299,8 @@ router.get('/reject/app/:id' , tokenauth , ensureAdmin , async(req , res) =>{
   console.log(approved);
   res.redirect('/user/admin')
 })
+
+
 router.get('/view/app/:id' , tokenauth , ensureAdmin , async(req , res)=> {
   let id  = req.params.id;
  let  app = await ApplicationModel.findById(id);
@@ -312,6 +314,22 @@ let   duration = app.duration;
   let u = user[0];
 res.render('viewapp' , {app : app , user: u})
 })
+
+
+router.get('/view/approved/app/:id' , tokenauth , ensureAdmin , async(req , res)=> {
+  let id  = req.params.id;
+ let  app = await ApplicationModel.findById(id);
+  let  applied_date = app.applied_on;
+let   duration = app.duration;
+  let day = applied_date.getUTCDay() -1;
+  let month = applied_date.getUTCMonth() + 1;
+  console.log(Number(day)+Number(duration));
+ let  phone = app.phone;
+ let  user = await Usermodel.find({phone : phone})
+  let u = user[0];
+res.render('viewapproved_app' , {app : app , user: u})
+})
+
 router.get('/dashboard' , tokenauth , async (req , res)=> {
   let user = req.user.phone;
   let app = await ApplicationModel.findOne({phone : user});
