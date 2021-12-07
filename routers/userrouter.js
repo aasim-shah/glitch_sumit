@@ -244,12 +244,13 @@ router.get('/admin' ,tokenauth, ensureAdmin, async(req , res)=> {
   let approved  =await ApplicationModel.count({application_status : 'approved'})
 let repaid  =await ApplicationModel.count({application_status : 'repaid'})
 let rejected  = await ApplicationModel.count({application_status : 'rejected'})
-
+let id = '61a4f8dce645cdd8ef3fd141';
+    let total_bal = await AdmindataModel.findById(id)
 
   let repay = await PaymentModel.count();
 
 if(total){
-  res.render('adminhome' , {apps : total ,pending : pending , approved : approved , repay : repay , repaid : repaid , rejected : rejected})
+  res.render('adminhome' , {apps : total, total: total_bal ,pending : pending , approved : approved , repay : repay , repaid : repaid , rejected : rejected})
 } else{res.render('adminhome')}
 
 
@@ -329,6 +330,7 @@ router.get('/repayment/approved/:id' , tokenauth , ensureAdmin , async(req , res
   let app = await ApplicationModel.findOneAndUpdate({phone : phone } , {
     application_status : 'repaid',
   });
+  let 
     if(app){
   res.send(app);
   }else{
