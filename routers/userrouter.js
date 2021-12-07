@@ -376,6 +376,11 @@ router.get('/adminRepayments' , tokenauth , ensureAdmin , async(req ,res)=> {
 
 
 
+router.get('/admin/addBalance' , tokenauth , ensureAdmin , async(req , res) => {
+  res.render('adminaddbalance')
+})
+
+
 
 
 
