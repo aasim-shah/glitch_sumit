@@ -2,15 +2,8 @@
     <script src="/socket.io/socket.io.js"></script>
    
 <body>
-    <%- include('./reuseable/navbar'); -%>
+    <%- include('./partials/header'); -%>
 
-    <% if(!isAdmin){ %>
-        <h1 class="heading">Support</h1>
-    <% }else{ %>
-        <a target="_balnk" href="/admin/user/<%= username %>">
-            <h1 class="heading"><%= username %></h1>
-        </a>
-    <% } %>
 
     <div class="messages">
         <% messages.forEach((message)=>{ %>
