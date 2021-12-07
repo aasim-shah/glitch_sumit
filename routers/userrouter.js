@@ -138,7 +138,7 @@ router.get('/info' , tokenauth, async(req ,res) => {
   const user  = await Usermodel.findById(e);
   res.render('userdata' , { user : user})
 })
-const cpUpload = upload.fields([{ name: 'image_1', maxCount: 1 }, { name: 'image_2', maxCount: 1 }, {name : 'image_3', maxCount:1} , {name :'video' , maxCount: 1}])
+const cpUpload = upload.fields([{ name: 'image_1', maxCount: 1 }, { name: 'image_2', maxCount: 1 },  {name :'video' , maxCount: 1}])
 
 router.post('/info' ,tokenauth , cpUpload,  async (req , res) => {
 let {first_name , middle_name , last_name , email , password , phone , father_name , mother_name , dob, address, state , city , pin_code , referrence1_name , referrence1_contact , referrence2_name ,referrence2_contact , bank_name , account_holder_name , gender, ifsc_code , account_number , documnet_id} = req.body;
@@ -166,8 +166,6 @@ const userInfo = {
   document_id : documnet_id,
   image_1 :'/'+ req.files['image_1'][0].originalname,
   image_2 :'/'+ req.files['image_2'][0].originalname,
-  image_3 : '/'+ req.files['image_3'][0].originalname,
-  if(req.body.image_3)
   video : '/'+ req.files['video'][0].originalname,
 }
 const userinfo = await Usermodel.findByIdAndUpdate(req.user.id , userInfo);
