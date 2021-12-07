@@ -330,7 +330,14 @@ router.get('/repayment/approved/:id' , tokenauth , ensureAdmin , async(req , res
   let app = await ApplicationModel.findOneAndUpdate({phone : phone } , {
     application_status : 'repaid',
   });
-  let 
+  let idd = '61a4f8dce645cdd8ef3fd141';
+  let raw_app = await ApplicationModel.findOne({phone : phone});
+  let raw_amount = raw_app.amount;
+  let admin_total_bal = await AdmindataModel.find();
+  let admin_bal = admin_total_bal.total_funds;
+  let new_bal = raw_amount - admin_bal ;
+  let updated_admin_bal = await AdmindataModel.findByIdAndUpdate(idd , {total_funds : new_bal})
+  console.log(updated_admin_bal);
     if(app){
   res.send(app);
   }else{
@@ -385,7 +392,7 @@ router.get('/admin/addBalance' , tokenauth , ensureAdmin , async(req , res) => {
 })
 
 
-router.post('/admin/addBalance' , tokenauth , ensureAdmin , async(req , res) => {
+router.post('/addBalance' , tokenauth , ensureAdmin , async(req , res) => {
   let bal = req.body.addBalance;
   let id = '61a4f8dce645cdd8ef3fd141';
   let updated_bal = await AdmindataModel.findByIdAndUpdate(id ,{total_funds:bal})
