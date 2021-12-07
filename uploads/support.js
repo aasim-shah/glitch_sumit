@@ -1,13 +1,13 @@
 var socket = io();
 
-socket.emit('join room',username);
+socket.emit('join room',phone);
 
 document.querySelector(".fa-paper-plane").addEventListener("click",function(){
     if(document.querySelector("textarea").value){
 
         var msg = {
             message: document.querySelector("textarea").value,
-            username: username,
+            phone: phone,
             fromAdmin: isAdmin
         }
 
@@ -17,7 +17,7 @@ document.querySelector(".fa-paper-plane").addEventListener("click",function(){
     }
 });
 
-socket.emit("mark seen",{username: username, isAdmin: isAdmin});
+socket.emit("mark seen",{username: phone, isAdmin: isAdmin});
 
 socket.on('new message',(message)=>{
     var div = document.createElement('div');
@@ -30,7 +30,7 @@ socket.on('new message',(message)=>{
         div.classList.add('self');
     }
 
-    socket.emit("mark seen",{username: username, isAdmin: isAdmin});
+    socket.emit("mark seen",{username: phone, isAdmin: isAdmin});
 
     document.querySelector('.messages').appendChild(div);
 

@@ -25,7 +25,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const chatsSchema = mongoose.Schema({
-    phone: String,
+    username: String,
     message: String,
     fromAdmin: Boolean, 
 });
@@ -120,13 +120,16 @@ io.on("connection",socket => {
 });
 
 app.get('/support',async(req,res)=>{
-  try{
-            var messages = await Chat.find({phone: req.user.phone});
-            res.render('support',{messages: messages, username: req.user.phone, isAdmin: false});
-  }catch{
-    res.send('some errors')
-  }
-    
+    if(req.isAuthenticated()){
+        if(!req.user.isAdmin){
+            var messages = await Chat.find({username: req.user.username});
+            res.render('support',{messages: messages, username: req.user.username, isAdmin: false});
+        }else{
+            res.redirect('/admin/support');
+        }
+    }else{
+        res.redirect('/login');
+    }
 });
 
 
