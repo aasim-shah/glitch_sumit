@@ -333,9 +333,12 @@ router.get('/repayment/approved/:id' , tokenauth , ensureAdmin , async(req , res
   let idd = '61a4f8dce645cdd8ef3fd141';
   let raw_app = await ApplicationModel.findOne({phone : phone});
   let raw_amount = raw_app.amount;
-  let admin_total_bal = await AdmindataModel.find();
+  let admin_total_bal = await AdmindataModel.findById(idd);
   let admin_bal = admin_total_bal.total_funds;
-  let new_bal = raw_amount - admin_bal ;
+  let new_bal = admin_bal - raw_amount ;
+  console.log(new_bal)
+  console.log(admin_bal)
+  console.log(raw_amount)
   let updated_admin_bal = await AdmindataModel.findByIdAndUpdate(idd , {total_funds : new_bal})
   console.log(updated_admin_bal);
     if(app){
