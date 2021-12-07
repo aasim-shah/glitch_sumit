@@ -377,7 +377,17 @@ router.get('/adminRepayments' , tokenauth , ensureAdmin , async(req ,res)=> {
 
 
 router.get('/admin/addBalance' , tokenauth , ensureAdmin , async(req , res) => {
-  res.render('adminaddbalance')
+    let id = '61a4f8dce645cdd8ef3fd141';
+    let total_bal = await AdmindataModel.findById(id);
+  res.render('adminaddbalance' , {total : total_bal})
+})
+
+
+router.post('/admin/addBalance' , tokenauth , ensureAdmin , async(req , res) => {
+  let bal = req.body.addBalance;
+  let id = '61a4f8dce645cdd8ef3fd141';
+  let updated_bal = await AdmindataModel.findByIdAndUpdate(id ,{total_funds:bal})
+  res.redirect('addBalance')
 })
 
 
